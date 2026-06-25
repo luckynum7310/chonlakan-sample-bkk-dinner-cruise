@@ -193,6 +193,8 @@
     --hero-line-height: 38px;
     --h2-font-size: 24px;
     --h2-line-height: 32px;
+    --landmark-title-size: 24px;
+    --landmark-title-line: 32px;
   }
 }
 
@@ -224,5 +226,7 @@
   :root[data-lang="th"] {
     --hero-font-size: 24px;
     --hero-line-height: 32px;
+    --landmark-title-size: 18px;
+    --landmark-title-line: 24px;
   }
 }

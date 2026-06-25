@@ -892,8 +892,7 @@ function updateCarouselProgress(name) {
   const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
   const ratio = maxScroll ? track.scrollLeft / maxScroll : 0;
   const progressWidth = progress.clientWidth;
-  const visibleRatio = track.scrollWidth ? track.clientWidth / track.scrollWidth : 1;
-  const thumbWidth = maxScroll ? Math.max(80, Math.round(progressWidth * visibleRatio)) : progressWidth;
+  const thumbWidth = maxScroll ? Math.min(80, progressWidth) : progressWidth;
   const maxThumbLeft = Math.max(0, progressWidth - thumbWidth);
   const thumbLeft = Math.round(maxThumbLeft * ratio);
   progress.style.setProperty("--thumb-width", `${thumbWidth}px`);

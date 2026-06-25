@@ -1088,13 +1088,8 @@ img.asset-missing {
 }
 
 .culinary .section-head h2 {
-  font-size: 48px;
-  line-height: 60px;
-}
-
-:root[data-lang="th"] .culinary .section-head h2 {
-  font-size: 38px;
-  line-height: 46px;
+  font-size: var(--h2-font-size);
+  line-height: var(--h2-line-height);
 }
 
 .menu-collage {
@@ -1267,8 +1262,8 @@ img.asset-missing {
   background: var(--gradient-gold-linear);
   background-clip: text;
   color: transparent;
-  font-size: 48px;
-  line-height: 60px;
+  font-size: var(--h2-font-size);
+  line-height: var(--h2-line-height);
   -webkit-background-clip: text;
 }
 
@@ -1716,7 +1711,12 @@ img.asset-missing {
     margin-inline: 0;
     max-width: calc(100% - 44px);
     overflow: hidden;
+    padding-bottom: 0;
     padding-inline: 0;
+  }
+
+  .tabs button {
+    padding-bottom: var(--space-8);
   }
 
   .category-menu-button {
@@ -1732,11 +1732,6 @@ img.asset-missing {
 
   .horizontal-cards {
     overflow-x: auto;
-    scroll-snap-type: x proximity;
-  }
-
-  .horizontal-cards > * {
-    scroll-snap-align: start;
   }
 
   .cruise-card {
@@ -1860,17 +1855,6 @@ img.asset-missing {
     top: 230px;
   }
 
-  .culinary .section-head h2,
-  :root[data-lang="th"] .culinary .section-head h2 {
-    font-size: 28px;
-    line-height: 38px;
-  }
-
-  :root[data-lang="th"] .culinary .section-head h2 {
-    font-size: 24px;
-    line-height: 32px;
-  }
-
   .culinary .section-head p {
     font-size: 12px;
     line-height: 16px;
@@ -1882,6 +1866,7 @@ img.asset-missing {
 
   .feature-list article {
     grid-template-columns: 44px minmax(0, 1fr) 24px;
+    min-height: 44px;
   }
 
   .feature-icon,
@@ -1908,14 +1893,25 @@ img.asset-missing {
     padding-top: var(--space-16);
   }
 
-  .experience-section .section-head h2 {
-    font-size: 28px;
-    line-height: 38px;
-  }
-
   .experience-section .section-head p {
     font-size: 12px;
     line-height: 16px;
+  }
+
+  .scroll-row {
+    margin-top: var(--space-32);
+  }
+
+  .seo p,
+  .footer-main p,
+  .footer-main a,
+  .footer-bottom {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .seo h2 {
+    margin-bottom: var(--space-16);
   }
 
   .blog-card {
@@ -2027,6 +2023,7 @@ img.asset-missing {
   .footer-main {
     gap: var(--space-48);
     grid-template-columns: repeat(3, 1fr);
+    min-height: 172px;
     padding-block: var(--space-32);
   }
 }
@@ -2040,9 +2037,8 @@ img.asset-missing {
     padding-top: var(--space-12);
   }
 
-  .experience-section .section-head h2 {
-    font-size: 24px;
-    line-height: 32px;
+  .scroll-row {
+    margin-top: var(--space-24);
   }
 
   .culinary {
@@ -2082,10 +2078,7 @@ img.asset-missing {
     top: 133.18px;
   }
 
-  .culinary .section-head h2,
-  :root[data-lang="th"] .culinary .section-head h2 {
-    font-size: 24px;
-    line-height: 32px;
+  .culinary .section-head h2 {
     max-width: 320px;
   }
 
@@ -2095,6 +2088,7 @@ img.asset-missing {
 
   .feature-list article {
     grid-template-columns: 40px minmax(0, 1fr) 24px;
+    min-height: 40px;
   }
 
   .feature-icon,
@@ -2145,8 +2139,8 @@ img.asset-missing {
   }
 
   .review-card {
-    flex-basis: 358px;
-    height: 225px;
+    flex-basis: 324px;
+    height: 220px;
   }
 
   .blog-card {
@@ -2199,7 +2193,11 @@ img.asset-missing {
     display: flex;
     flex-direction: column;
     gap: var(--space-16);
-    padding: var(--space-24) var(--container-margin) var(--space-12);
+    padding: var(--space-24) var(--container-margin) var(--space-16);
+  }
+
+  .seo h2 {
+    margin-bottom: var(--space-8);
   }
 
   .footer-bottom {
