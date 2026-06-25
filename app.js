@@ -30,7 +30,7 @@ function sectionHead(title, subtitle = "", action = "") {
         <h2>${title}</h2>
         ${subtitle ? `<p>${subtitle}</p>` : ""}
       </div>
-      ${action ? `<a class="see-all" href="#">${action} <span aria-hidden="true">→</span></a>` : ""}
+      ${action ? `<a class="see-all" href="#"><span>${action}</span><img src="${assets.culinaryArrow}" alt="" /></a>` : ""}
     </div>
   `;
 }
@@ -279,7 +279,7 @@ function blogs() {
       ${sectionHead(text("blogs.title"), text("blogs.subtitle"), text("blogs.seeAll"))}
       <div class="horizontal-cards" data-carousel="blogs">
         ${blogCards.map((card, index) => html`
-          <article class="blog-card" tabindex="0">
+          <article class="blog-card">
             <div class="blog-media">
               <img src="${assets.blogs[index % assets.blogs.length]}" alt="" />
               <span class="media-count"><img src="${assets.blogImageCount}" alt="" />${card.imageCount}</span>
@@ -332,7 +332,7 @@ function reviews() {
       ${sectionHead(text("reviews.title"), text("reviews.subtitle"), text("reviews.seeAll"))}
       <div class="horizontal-cards" data-carousel="reviews">
         ${reviewCards.map((card, index) => html`
-          <article class="review-card" tabindex="0">
+          <article class="review-card">
             <img class="review-avatar" src="${assets.guests[index % assets.guests.length]}" alt="" />
             <div class="review-top">
               <strong>${card.name}</strong>
@@ -496,7 +496,11 @@ function initInteractions() {
 
   document.querySelectorAll("[data-carousel]").forEach((track) => {
     track.addEventListener("scroll", () => updateCarouselProgress(track.dataset.carousel), { passive: true });
-    if (track.dataset.carousel !== "landmarks") initDragScroll(track);
+    if (track.dataset.carousel === "landmarks") {
+      initLandmarkSwipe(track);
+    } else {
+      initDragScroll(track);
+    }
     updateCarouselProgress(track.dataset.carousel);
   });
 
@@ -539,6 +543,7 @@ function initDragScroll(track) {
 
   const startDrag = (event) => {
     if (event.button !== undefined && event.button !== 0) return;
+    if (event.pointerType === "touch") return;
     isDown = true;
     moved = false;
     lastDelta = 0;
@@ -604,6 +609,51 @@ function initDragScroll(track) {
     if (window.PointerEvent || activePointerId !== null) return;
     endDrag(event);
   });
+}
+
+function initLandmarkSwipe(track) {
+  let startX = 0;
+  let startY = 0;
+  let pointerId = null;
+  let swiped = false;
+
+  track.addEventListener("pointerdown", (event) => {
+    if (event.pointerType !== "touch") return;
+    startX = event.clientX;
+    startY = event.clientY;
+    pointerId = event.pointerId;
+    swiped = false;
+    track.setPointerCapture?.(event.pointerId);
+  });
+
+  track.addEventListener("pointerup", (event) => {
+    if (event.pointerType !== "touch" || event.pointerId !== pointerId) return;
+    const deltaX = event.clientX - startX;
+    const deltaY = event.clientY - startY;
+    track.releasePointerCapture?.(event.pointerId);
+    pointerId = null;
+
+    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+    swiped = true;
+    if (deltaX < 0) {
+      activateLandmark(activeLandmarkIndex + 1);
+    } else if (activeLandmarkIndex > 0) {
+      activateLandmark(activeLandmarkIndex - 1);
+    }
+  });
+
+  track.addEventListener("pointercancel", (event) => {
+    if (event.pointerId !== pointerId) return;
+    pointerId = null;
+    swiped = false;
+  });
+
+  track.addEventListener("click", (event) => {
+    if (!swiped) return;
+    event.preventDefault();
+    event.stopPropagation();
+    swiped = false;
+  }, true);
 }
 
 function initCarouselScrollbar(scrollbar) {

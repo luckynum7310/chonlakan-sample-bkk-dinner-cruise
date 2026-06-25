@@ -400,11 +400,25 @@ img.asset-missing {
 }
 
 .see-all {
+  align-items: center;
   color: var(--text-brand);
+  display: inline-flex;
   font-size: 14px;
   font-weight: 700;
+  gap: var(--space-8);
+  height: 24px;
   line-height: 24px;
   white-space: nowrap;
+}
+
+.see-all span {
+  text-decoration: underline;
+}
+
+.see-all img {
+  display: block;
+  height: 15px;
+  width: 20px;
 }
 
 .landmarks {
@@ -732,7 +746,9 @@ img.asset-missing {
   padding: 22px;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+  touch-action: pan-x pan-y;
   user-select: none;
 }
 
@@ -1045,8 +1061,7 @@ img.asset-missing {
   box-sizing: border-box;
   display: grid;
   gap: var(--container-gap-x);
-  grid-template-columns: 586px minmax(0, 574px);
-  justify-content: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   overflow: hidden;
   width: 100%;
 }
@@ -1086,7 +1101,7 @@ img.asset-missing {
   aspect-ratio: 586 / 544;
   height: 544px;
   position: relative;
-  width: 586px;
+  width: min(586px, 100%);
 }
 
 .menu-photo {
@@ -1246,14 +1261,6 @@ img.asset-missing {
 
 .dark .section-head p {
   color: var(--text-gray);
-}
-
-.experience-section > .section-head,
-.experience-section > .horizontal-cards,
-.experience-section > .scroll-row {
-  margin-inline: auto;
-  max-width: 1184px;
-  width: 100%;
 }
 
 .experience-section .section-head h2 {
@@ -1685,6 +1692,7 @@ img.asset-missing {
     overflow: visible;
     padding-top: 0;
     padding-inline: var(--container-margin);
+    touch-action: pan-y;
   }
 
   .landmark-card {
@@ -1724,6 +1732,11 @@ img.asset-missing {
 
   .horizontal-cards {
     overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .horizontal-cards > * {
+    scroll-snap-align: start;
   }
 
   .cruise-card {
@@ -1777,6 +1790,34 @@ img.asset-missing {
   .cruise-card:hover .card-hover-cta,
   .cruise-card:focus-visible .card-hover-cta {
     max-height: 40px;
+  }
+
+  .cruise-card:hover {
+    border-color: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .cruise-card:hover .card-hover-cta {
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .blog-card:hover {
+    border-width: 1px;
+  }
+
+  .review-card:hover {
+    border-color: transparent;
+  }
+
+  .carousel-scrollbar:hover::after {
+    background: var(--border-secondary);
+  }
+
+  .arrows button:hover {
+    border-color: var(--border-primary);
   }
 
   .culinary {
